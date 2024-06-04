@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Hand from './Hand';
-import Controls from './Controls';
 import Card from './Card';
 
 const Game: React.FC = () => {
@@ -25,6 +24,10 @@ const Game: React.FC = () => {
       });
     });
 
+    // 添加双王
+    deck.push('Joker Black');
+    deck.push('Joker Red');
+
     deck.sort(() => Math.random() - 0.5);
 
     setPlayerCards(deck.slice(0, 17)); // 取前17张作为玩家的手牌
@@ -47,24 +50,13 @@ const Game: React.FC = () => {
     setSelectedCards([]);
   };
 
-  const playCard = (player: string, card: string) => {
-    if (player === 'player') {
-      setTableCards([card]);
-      setPlayerCards(playerCards.filter(c => c !== card));
-    }
-    // 简单的AI逻辑，选择第一张牌出牌
-    else if (player === 'computer1') {
-      setTableCards([computer1Cards[0]]);
-      setComputer1Cards(computer1Cards.slice(1));
-    } else if (player === 'computer2') {
-      setTableCards([computer2Cards[0]]);
-      setComputer2Cards(computer2Cards.slice(1));
-    }
+  const passTurn = () => {
+    setSelectedCards([]);
   };
 
   return (
     <div className="game">
-      <h1>Dou Di Zhu</h1>
+      <div className="header">Dou Di Zhu</div>
       <div className="computer-avatar left">
         <div className="avatar"></div>
         <div>Computer 1</div>
@@ -89,8 +81,10 @@ const Game: React.FC = () => {
       <div className="player-hand">
         <Hand cards={playerCards} playerName="Player" selectedCards={selectedCards} onCardClick={toggleCardSelection} />
       </div>
-      <Controls playCard={playCard} />
-      <button onClick={playSelectedCards}>Play Selected Cards</button>
+      <div className="action-buttons">
+        <button onClick={playSelectedCards}>出牌</button>
+        <button onClick={passTurn}>过</button>
+      </div>
     </div>
   );
 };

@@ -4,18 +4,14 @@ interface CardProps {
   value: string;
   isHidden?: boolean;
   isSelected?: boolean;
-  style?: React.CSSProperties;
   onClick?: () => void;
 }
 
-const Card: React.FC<CardProps> = ({ value, isHidden = false, isSelected = false, style, onClick }) => {
+const Card: React.FC<CardProps> = ({ value, isHidden = false, isSelected = false, onClick }) => {
+  const className = `card ${isHidden ? 'hidden' : ''} ${isSelected ? 'selected' : ''} ${value.includes('Joker') ? 'joker' : ''}`;
   return (
-    <div
-      className={`card ${isHidden ? 'hidden' : ''} ${isSelected ? 'selected' : ''}`}
-      style={style}
-      onClick={onClick}
-    >
-      {isHidden ? '' : <div className="value">{value}</div>}
+    <div className={className} onClick={onClick}>
+      <div className="value">{!isHidden && value}</div>
     </div>
   );
 };
