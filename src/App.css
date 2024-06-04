@@ -1,42 +1,197 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.App {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.game {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  height: 100vh;
+  overflow: hidden;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.table {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.player-hand, .computer-hand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.computer-hand.left {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.computer-hand.right {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hand-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hand {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.hand.computer-hand {
+  flex-direction: column;
+  align-items: center;
+}
+
+.hand.computer-hand .card {
+  width: 40px;
+  height: 60px;
+  margin: -25px 0;
+}
+
+.hand.player-hand {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 90%;
+  position: relative;
+}
+
+.hand.player-hand .card {
+  margin-left: -40px; /* 使牌部分重叠 */
 }
 
 .card {
-  padding: 2em;
+  width: 60px;
+  height: 90px;
+  border: 1px solid #000;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  font-size: 14px;
+  cursor: pointer;
+  flex-direction: column;
+  background-color: white; /* 确保玩家牌不透明 */
+  position: relative;
 }
 
-.read-the-docs {
-  color: #888;
+.card.hidden {
+  background-color: #ccc; /* 隐藏牌内容 */
+}
+
+.card.selected {
+  border: 2px solid blue; /* 选中的牌有蓝色边框 */
+}
+
+.card .value {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  writing-mode: vertical-lr; /* 竖着正着显示 */
+  transform: rotate(0deg); /* 确保文字没有旋转 */
+  text-align: left; /* 左对齐 */
+}
+
+.card-on-table {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card-on-table .card {
+  margin: 0 5px;
+  width: 60px;
+  height: 90px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.player-name {
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.controls {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.player-hand {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* 圆形头像 */
+  margin-bottom: 10px;
+  background-color: #ddd; /* 示例背景色 */
+  z-index: 1; /* 确保头像在最前面 */
+}
+
+.computer-avatar {
+  position: absolute;
+  top: 10px;
+}
+
+.computer-avatar.left {
+  left: 10px;
+}
+
+.computer-avatar.right {
+  right: 10px;
+}
+
+/* 媒体查询用于适配手机屏幕 */
+@media (max-width: 600px) {
+  .card {
+    width: 40px;
+    height: 60px;
+    font-size: 10px;
+  }
+
+  .controls button {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .player-hand {
+    bottom: 5px;
+  }
+
+  .computer-hand.left, .computer-hand.right {
+    top: 5px;
+  }
+
+  .hand.player-hand {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .hand.player-hand .card {
+    margin-left: -20px;
+  }
 }
