@@ -1,12 +1,12 @@
 // import { useState } from 'react'
-import React from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// import React from 'react'
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg'
 
 import Game from './components/Game';
 import './App.css'
 
-import WebApp from '@twa-dev/sdk'
+// import WebApp from '@twa-dev/sdk'
 
 function App() {
 
