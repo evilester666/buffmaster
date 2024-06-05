@@ -30,10 +30,8 @@ const Hand: React.FC<HandProps> = ({ cards, isHidden = false, playerName, isComp
         if (isComputerHand) {
           // 竖向叠牌
           cards.forEach((card: HTMLElement, index: number) => {
-            if (card instanceof HTMLElement) {
-              card.style.zIndex = `${index}`;
-              card.style.top = `${index * 20}px`;
-            }
+            card.style.zIndex = `${index}`;
+            card.style.top = `${index * 20}px`;
           });
         } else {
           // 横向叠牌
@@ -43,18 +41,14 @@ const Hand: React.FC<HandProps> = ({ cards, isHidden = false, playerName, isComp
           if (totalCardWidth > handWidth) {
             const overlap = (totalCardWidth - handWidth) / (cards.length - 1);
             cards.forEach((card: HTMLElement, index: number) => {
-              if (card instanceof HTMLElement) {
-                card.style.zIndex = `${index}`;
-                card.style.left = `${index * (cardWidth - overlap)}px`;
-              }
+              card.style.zIndex = `${index}`;
+              card.style.left = `${index * (cardWidth - overlap)}px`;
             });
           } else {
             const startLeft = (handWidth - totalCardWidth) / 2;
             cards.forEach((card: HTMLElement, index: number) => {
-              if (card instanceof HTMLElement) {
-                card.style.zIndex = `${index}`;
-                card.style.left = `${startLeft + index * cardWidth}px`;
-              }
+              card.style.zIndex = `${index}`;
+              card.style.left = `${startLeft + index * cardWidth}px`;
             });
           }
         }
