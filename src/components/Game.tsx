@@ -137,10 +137,73 @@ const Game: React.FC = () => {
   };
 
   const isValidPlay = (cards: string[]) => {
-    // 实现牌型判断逻辑，确保出牌符合规则
-    // 示例简单逻辑：只能出一张牌
-    if (cards.length !== 1) {
+    if (cards.length === 0) {
       return false;
+    }
+
+    const values = cards.map(card => card.slice(0, -1));
+    const suits = cards.map(card => card.slice(-1));
+    const uniqueValues = [...new Set(values)];
+    const uniqueSuits = [...new Set(suits)];
+
+    const countMap = values.reduce((acc, value) => {
+      acc[value] = (acc[value] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const valueCounts = Object.values(countMap);
+    const uniqueValueCounts = [...new Set(valueCounts)];
+
+    // 火箭（双王）
+    if (uniqueValues.length === 2 && uniqueValues.includes('Joker') && uniqueValues.includes('Joker Black')) {
+      return true;
+    }
+
+    // 炸弹（四张相同数值牌）
+    if (uniqueValueCounts.length === 1 && uniqueValueCounts[0] === 4) {
+      return true;
+    }
+
+    // 单牌
+    if (cards.length === 1) {
+      return true;
+    }
+
+    // 对牌
+    if (cards.length === 2 && uniqueValueCounts[0] === 2) {
+      return true;
+    }
+
+    // 三张牌
+    if (cards.length === 3 && uniqueValueCounts[0] === 3) {
+      return true;
+    }
+
+    // 顺子（五张或更多连续单牌）
+    if (cards.length >= 5 && uniqueValues.length === cards.length && isSequential(values)) {
+      return true;
+    }
+
+    // 连对（三对或更多连续对牌）
+    if (cards.length >= 6 && cards.length % 2 === 0 && uniqueValueCounts.length === 1 && uniqueValueCounts[0] === 2 && isSequential(uniqueValues)) {
+      return true;
+    }
+
+    // 飞机（两个及以上点数相邻的三张牌）
+    if (cards.length >= 6 && cards.length % 3 === 0 && uniqueValueCounts.length === 1 && uniqueValueCounts[0] === 3 && isSequential(uniqueValues)) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const isSequential = (values: string[]) => {
+    const valueOrder = ['3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2'];
+    const valueIndices = values.map(value => valueOrder.indexOf(value)).sort((a, b) => a - b);
+    for (let i = 1; i < valueIndices.length; i++) {
+      if (valueIndices[i] !== valueIndices[i - 1] + 1) {
+        return false;
+      }
     }
     return true;
   };
